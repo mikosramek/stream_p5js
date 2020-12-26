@@ -1,4 +1,4 @@
-const layers = 15;
+const LAYER_COUNT = 15;
 class Snowflake {
     constructor() {
         this.randomizeStats();
@@ -20,8 +20,8 @@ class Snowflake {
         fill(255,255,255,100);
         ellipse(this.x, this.y, this.r, this.r * 1.5);
         const baseAlpha = 100;
-        const alphaStep = baseAlpha / layers;
-        for (let i = 0; i < layers; i += 1) {
+        const alphaStep = baseAlpha / LAYER_COUNT;
+        for (let i = 0; i < LAYER_COUNT; i += 1) {
             const alpha = baseAlpha - alphaStep * i;
             fill(255,255,255, alpha);
             const size = this.r + (this.r * 0.5) * i;
@@ -34,5 +34,23 @@ class Snowflake {
         if (this.y >= height + 50) {
             this.randomizeStats();
         }
+    }
+}
+
+const snowflakes = [];
+const SNOWFLAKE_COUNT = 100;
+
+function setup() {
+    createCanvas(1920 / 2, 1080 / 2);
+    for (let i = 0; i < SNOWFLAKE_COUNT; i += 1) {
+        snowflakes.push(new Snowflake());
+    }
+}
+  
+function draw() {
+    background(0, 0, 255, 0);
+    clear();
+    for(let i = 0; i < snowflakes.length; i += 1) {
+        snowflakes[i].update();
     }
 }
